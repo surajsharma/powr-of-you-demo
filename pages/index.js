@@ -26,9 +26,9 @@ function Home() {
   const [items, setItems] = useState([]);
   const [fitems, sFitems] = useState([]);
 
-  const [sTotal, setStotal] = useState(0);
-  const [gTotal, setGtotal] = useState(0);
-  const [discount, setDiscount] = useState(0);
+  const [co, sco] = useState({});
+
+  const [free, setFree] = useState({ coffee: 0, coke: 0 });
 
   useEffect(async () => {
     setLoading(true);
@@ -56,12 +56,10 @@ function Home() {
         sFitems,
         setCartView,
         cartView,
-        sTotal,
-        setStotal,
-        gTotal,
-        setGtotal,
-        discount,
-        setDiscount
+        co,
+        sco,
+        free,
+        setFree
       }}
     >
       <main className={styles.main}>
@@ -75,7 +73,7 @@ function Home() {
         {!cartView && <Tagbar />}
         <br />
         <h3>
-          {tag
+          {tag && !cartView
             ? `Items tagged ${tag.toUpperCase()}`
             : cartView
             ? "Checkout"

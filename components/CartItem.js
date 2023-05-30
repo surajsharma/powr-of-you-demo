@@ -4,7 +4,7 @@ import { Spacer, Tag } from "@geist-ui/core";
 import { Minus, Plus, X } from "@geist-ui/icons";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../pages";
-export default function CartIem({ item }) {
+export default function CartIem({ item, co }) {
   const {
     cart,
     setCart,
@@ -14,7 +14,10 @@ export default function CartIem({ item }) {
     setGtotal,
     discount,
     setDiscount,
-    items
+    items,
+    sco,
+    setFree,
+    free
   } = useContext(AppContext);
 
   const [count, setCount] = useState(1);
@@ -33,14 +36,33 @@ export default function CartIem({ item }) {
 
   const removeFromCart = (item) => {
     setCart(cart.filter((c) => c != item.id));
+    let n = co;
+    delete n[item.id];
+    sco(n);
+
+    if (item.id == 642) {
+      setFree({ ...free, coke: 0 });
+    }
+    if (item.id == 532) {
+      setFree({ ...free, coffee: 0 });
+    }
   };
 
   useEffect(() => {
-    const st = count * parseFloat(item.price.replace("£", ""));
-    setStotal(st);
-
-    setGtotal(st - discount);
+    const unitPrice = parseFloat(item.price.replace("£", ""));
+    sco({
+      ...co,
+      [item.id]: { count, unitPrice, subtotal: unitPrice * count }
+    });
   }, [cart, count]);
+
+  useEffect(() => {
+    if (co[item.id]) {
+      setCount(co[item.id].count);
+    } else {
+      setCount(1);
+    }
+  }, []);
 
   return (
     <div className={styles.box}>
@@ -48,8 +70,8 @@ export default function CartIem({ item }) {
       <div className={styles.details}>
         <h4>{item.name}</h4>
         <div className="price">
-          {item.price} X {count} = £
-          {count * parseFloat(item.price.replace("£", ""))}
+          {item.price} X {co[item.id] && co[item.id].count} = £
+          {(count * parseFloat(item.price.replace("£", ""))).toFixed(2)}
         </div>
         <br />
         <div className={item.available > 5 ? "available" : "atfewleft"}>
@@ -92,7 +114,7 @@ export default function CartIem({ item }) {
             <Plus color="green" size={16}></Plus>
           </Tag>
           &nbsp;&nbsp;&nbsp;
-          {count}&nbsp;&nbsp;&nbsp;
+          {co[item.id] && co[item.id].count}&nbsp;&nbsp;&nbsp;
           <Tag
             style={{
               background: "#E86F6F",

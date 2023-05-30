@@ -7,14 +7,26 @@ import { useContext } from "react";
 import { AppContext } from "../pages";
 
 export default function ItemCard({ item }) {
-  const { faves, setFaves, cart, setCart } = useContext(AppContext);
+  const { faves, setFaves, cart, setCart, co, sco } = useContext(AppContext);
 
   const handleAddToCart = (item) => {
     if (cart.includes(item.id)) {
       setCart(cart.filter((c) => c != item.id));
+      let n = co;
+      delete n[item.id];
+      sco(n);
       return;
     }
     setCart(Array.from(new Set([...cart, item.id])));
+    const unitPrice = parseFloat(item.price.replace("£", ""));
+    sco({
+      ...co,
+      [item.id]: {
+        count: 1,
+        unitPrice,
+        subtotal: unitPrice * 1
+      }
+    });
   };
   const handleAddToFaves = (item) => {
     if (faves.includes(item.id)) {
