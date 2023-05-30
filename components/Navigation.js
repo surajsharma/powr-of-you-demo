@@ -1,24 +1,27 @@
-import { useCallback, useState } from "react";
 import styles from "../styles/Navigation.module.css";
 import { Heart, Cart } from "./Icons";
 
 import SvgIcon from "./SvgIcon";
 import { Spacer } from "@geist-ui/core";
-import { Badge } from "@geist-ui/core";
-
-import Avatar from "../avatar.svg";
+import { useContext } from "react";
+import { AppContext } from "../pages";
 
 export default function Navigation() {
+  const { faves, cart } = useContext(AppContext);
+
   return (
     <div className={styles.nav}>
       <>
-        <SvgIcon icon={Heart} b={10}></SvgIcon>
-        <Spacer h={1} />
+        <SvgIcon icon={Heart} b={faves.length}></SvgIcon>
       </>
-      <img src={"http://s.cdpn.io/3/kiwi.svg"} />
-      <Spacer h={1} />
-
-      <SvgIcon icon={Cart} b={9} />
+      <>
+        <Spacer h={2} />
+        <Spacer h={2} />
+        <img src={"https://svgshare.com/i/tgL.svg"} alt="mySvgImage" />
+        <Spacer h={2} />
+        <Spacer h={2} />
+      </>
+      <SvgIcon icon={Cart} b={cart.length} />
     </div>
   );
 }

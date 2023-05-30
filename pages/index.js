@@ -1,31 +1,63 @@
-import { useCallback, useEffect, useState } from 'react'
-import styles from '../styles/home.module.css'
+import { ITEMS_URL, ITEMS_URL_CORS } from "../config";
+import { createContext, useEffect, useState } from "react";
+import styles from "../styles/home.module.css";
 
+import ItemGrid from "../components/ItemGrid";
+import Navigation from "../components/Navigation";
 import Searchbar from "../components/SearchBar";
-import ItemGrid from '../components/ItemGrid';
-import Navigation from '../components/Navigation';
-import Tagbar from '../components/TagBar';
+import Tagbar from "../components/TagBar";
 
+export const AppContext = createContext("");
 
 function Home() {
+  useEffect(() => {}, []);
 
-  useEffect(() => {
-  }, [])
+  const [search, setSearch] = useState("");
+  const [tag, setTag] = useState(null);
+  const [faves, setFaves] = useState([]);
+  const [cart, setCart] = useState([]);
+
+  const [items, setItems] = useState([]);
+  const [fitems, sFitems] = useState([]);
+
+  useEffect(async () => {
+    const resp = await fetch(ITEMS_URL);
+    const data = await resp.json();
+    setItems(data);
+    sFitems(data);
+  }, []);
 
   return (
-    <main className={styles.main}>
-      <h4>Groceries</h4>
-      <div className={styles.top}>
-        <Searchbar />
-        <Navigation />
-      </div>
+    <AppContext.Provider
+      value={{
+        search,
+        setSearch,
+        tag,
+        setTag,
+        faves,
+        setFaves,
+        cart,
+        setCart,
+        items,
+        setItems,
+        fitems,
+        sFitems
+      }}
+    >
+      <main className={styles.main}>
+        <h4>Groceries</h4>
+        <div className={styles.top}>
+          <Searchbar search={search} />
+          <Navigation />
+        </div>
         <Tagbar />
-      <div className={styles.items}>
-        <h3>Trending Items</h3>
-        <ItemGrid search={""} />
-      </div>
-    </main>
-  )
+        <div className={styles.items}>
+          <h3>Trending Items</h3>
+          <ItemGrid />
+        </div>
+      </main>
+    </AppContext.Provider>
+  );
 }
 
-export default Home
+export default Home;
