@@ -49,8 +49,12 @@ export default function Cart() {
   useEffect(() => {
     calcStotal();
     calcDiscount();
-    setGtotal(sTotal - discount);
   }, [co]);
+
+  useEffect(() => {
+    const gt = sTotal - discount;
+    setGtotal(gt);
+  }, [sTotal]);
 
   return (
     <>
@@ -69,7 +73,7 @@ export default function Cart() {
           <br />
           <Text>Subtotal = &nbsp;£{sTotal.toFixed(2)}</Text>
           <br />
-          <Text>Total = &nbsp;£{gTotal.toFixed(2)}</Text>
+          <h2>Total = &nbsp;£{gTotal.toFixed(2)}</h2>
         </div>
       ) : null}
 
@@ -80,7 +84,7 @@ export default function Cart() {
         </pre>
       ) : null}
 
-      <Button type="success">Checkout</Button>
+      {!isEmpty && <Button type="success">Checkout</Button>}
     </>
   );
 }
