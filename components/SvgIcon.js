@@ -1,6 +1,6 @@
 import styles from "../styles/Navigation.module.css";
 import { Badge } from "@geist-ui/core";
-export default function SvgIcon({ icon, b }) {
+export default function SvgIcon({ icon, b, fill }) {
   return b > 0 ? (
     <div className={styles.icon}>
       <Badge
@@ -21,7 +21,7 @@ export default function SvgIcon({ icon, b }) {
       >
         {icon.solid.path.map((p, i) => {
           return (
-            <g key={i} fill={p.fill}>
+            <g key={i} fill={fill || p.fill}>
               <path d={p.d} />
             </g>
           );
@@ -38,7 +38,7 @@ export default function SvgIcon({ icon, b }) {
       >
         {icon.solid.path.map((p, i) => {
           return (
-            <g key={i} fill={p.fill}>
+            <g key={i} fill={fill || p.fill}>
               <path d={p.d} />
             </g>
           );

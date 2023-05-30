@@ -3,8 +3,27 @@ import { SHeart, SCart } from "./Icons";
 import SvgIcon from "./SvgIcon";
 
 import { Tag } from "@geist-ui/core";
+import { useContext } from "react";
+import { AppContext } from "../pages";
 
 export default function ItemCard({ item }) {
+  const { faves, setFaves, cart, setCart } = useContext(AppContext);
+
+  const handleAddToCart = (item) => {
+    if (cart.includes(item.id)) {
+      setCart(cart.filter((c) => c != item.id));
+      return;
+    }
+    setCart(Array.from(new Set([...cart, item.id])));
+  };
+  const handleAddToFaves = (item) => {
+    if (faves.includes(item.id)) {
+      setFaves(faves.filter((f) => f != item.id));
+      return;
+    }
+    setFaves(Array.from(new Set([...faves, item.id])));
+  };
+
   return (
     <div className={styles.box}>
       <img className={styles.img} src={item.img} alt={item.name} />
@@ -38,8 +57,18 @@ export default function ItemCard({ item }) {
         </div>
         <div className={styles.actions}>
           <div className="price">{item.price}</div>
-          <SvgIcon icon={SCart} />
-          <SvgIcon icon={SHeart} />
+          <div onClick={() => handleAddToCart(item)}>
+            <SvgIcon
+              icon={SCart}
+              fill={cart.includes(item.id) ? "#ff00ff" : null}
+            />
+          </div>
+          <div onClick={() => handleAddToFaves(item)}>
+            <SvgIcon
+              icon={SHeart}
+              fill={faves.includes(item.id) ? "#ff00ff" : null}
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { AppContext } from "../pages";
 
 export default function Navigation() {
-  const { faves, cart } = useContext(AppContext);
+  const { faves, cart, cartView, setCartView } = useContext(AppContext);
 
   return (
     <div className={styles.nav}>
@@ -21,7 +21,10 @@ export default function Navigation() {
         <Spacer h={2} />
         <Spacer h={2} />
       </>
-      <SvgIcon icon={Cart} b={cart.length} />
+
+      <div onClick={() => setCartView(!cartView)}>
+        <SvgIcon icon={Cart} b={cart.length} fill={cartView ? "#f00" : null} />
+      </div>
     </div>
   );
 }

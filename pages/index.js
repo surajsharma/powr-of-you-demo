@@ -1,16 +1,22 @@
-import { ITEMS_URL, ITEMS_URL_CORS } from "../config";
 import { createContext, useEffect, useState } from "react";
+import { ITEMS_URL } from "../config";
 import styles from "../styles/home.module.css";
 
 import ItemGrid from "../components/ItemGrid";
 import Navigation from "../components/Navigation";
 import Searchbar from "../components/SearchBar";
 import Tagbar from "../components/TagBar";
+import Cart from "../components/Cart";
+
+import { Spacer, Spinner } from "@geist-ui/core";
 
 export const AppContext = createContext("");
 
 function Home() {
   useEffect(() => {}, []);
+
+  const [loading, setLoading] = useState(false);
+  const [cartView, setCartView] = useState(false);
 
   const [search, setSearch] = useState("");
   const [tag, setTag] = useState(null);
@@ -20,11 +26,17 @@ function Home() {
   const [items, setItems] = useState([]);
   const [fitems, sFitems] = useState([]);
 
+  const [sTotal, setStotal] = useState(0);
+  const [gTotal, setGtotal] = useState(0);
+  const [discount, setDiscount] = useState(0);
+
   useEffect(async () => {
+    setLoading(true);
     const resp = await fetch(ITEMS_URL);
     const data = await resp.json();
     setItems(data);
     sFitems(data);
+    setLoading(false);
   }, []);
 
   return (
@@ -41,20 +53,35 @@ function Home() {
         items,
         setItems,
         fitems,
-        sFitems
+        sFitems,
+        setCartView,
+        cartView,
+        sTotal,
+        setStotal,
+        gTotal,
+        setGtotal,
+        discount,
+        setDiscount
       }}
     >
       <main className={styles.main}>
         <h4>Groceries</h4>
         <div className={styles.top}>
           <Searchbar search={search} />
+          <Spacer />
+          {loading && <Spinner />}
           <Navigation />
         </div>
-        <Tagbar />
-        <div className={styles.items}>
-          <h3>Trending Items</h3>
-          <ItemGrid />
-        </div>
+        {!cartView && <Tagbar />}
+        <br />
+        <h3>
+          {tag
+            ? `Items tagged ${tag.toUpperCase()}`
+            : cartView
+            ? "Checkout"
+            : "Trending Items"}
+        </h3>
+        <div className={styles.items}>{cartView ? <Cart /> : <ItemGrid />}</div>
       </main>
     </AppContext.Provider>
   );

@@ -1,9 +1,9 @@
 import styles from "../styles/ItemGrid.module.css";
 
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 
-import ItemCard from "./ItemCard";
 import { AppContext } from "../pages";
+import ItemCard from "./ItemCard";
 
 export default function ItemGrid() {
   const { search, tag, items, fitems, sFitems } = useContext(AppContext);

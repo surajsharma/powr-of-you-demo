@@ -8,12 +8,13 @@
     padding:10px;
     vertical-align:middle;
     width:400px;
+    height: 200px;
 }
 
 .img{
     max-width: 200px;
-    height:150px;
-    width:150px;
+    height:100px;
+    width:100px;
     object-fit:cover;
     border-radius: 30px;
 }
@@ -21,7 +22,7 @@
 .details{
     display:flex;
     flex-direction: column;
-    width:50%;
+    width:70%;
 
 }
 
