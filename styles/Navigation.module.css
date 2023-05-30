@@ -1,0 +1,7 @@
+.nav{
+    display:flex;
+    vertical-align: middle;
+    justify-content: space-around;
+    transform:scale(0.7);
+    width:30vw;
+}
