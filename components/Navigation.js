@@ -8,10 +8,10 @@ import { Spacer } from '@geist-ui/core'
 export default function Navigation() {
     return <div className={styles.nav}>
                 <SvgIcon icon={Heart}/>
-                <Spacer h={.5} />
+                <Spacer h={1} />
 
                 <SvgIcon icon={Avatar}/>
-                <Spacer h={.5} />
+                <Spacer h={1} />
 
                 <SvgIcon icon={Cart}/>
             </div>

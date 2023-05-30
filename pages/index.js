@@ -14,6 +14,7 @@ function Home() {
 
   return (
     <main className={styles.main}>
+      <h4>Groceries</h4>
       <div className={styles.top}>
         <Searchbar />
         <Navigation />

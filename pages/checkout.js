@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
-import Button from '../components/Button'
-import ClickCount from '../components/ClickCount'
+
 import styles from '../styles/home.module.css'
 
+import Searchbar from "../components/SearchBar";
+import Navigation from '../components/Navigation';
+import Tagbar from '../components/TagBar';
 
 function Checkout() {
 
@@ -11,7 +13,15 @@ function Checkout() {
 
   return (
     <main className={styles.main}>
-      Checkout
+      <h4>Groceries</h4>
+      <div className={styles.top}>
+        <Searchbar />
+        <Navigation />
+      </div>
+        <Tagbar />
+      <div className={styles.items}>
+        <h3>Checkout</h3>
+      </div>
     </main>
   )
 }
