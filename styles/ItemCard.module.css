@@ -8,6 +8,7 @@
     padding:10px;
     vertical-align:middle;
     width:400px;
+    align-items: center;
 }
 
 .img{
@@ -43,6 +44,16 @@
     vertical-align: middle;
     margin-top: 40px;
 }
+
+@media (min-width: 300px) {
+    .box{
+        margin-left: -45px;
+        transform: scale(0.85);
+
+    }
+}
+
+
 
 @media (min-width: 600px) {
     .box{
